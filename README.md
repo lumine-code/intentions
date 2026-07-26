@@ -38,7 +38,7 @@ The list appearance can be tweaked from your `styles.less`:
 
 ## Services
 
-- **intentions.list** (`^1.0.0`): consumed to gather code actions for the cursor position from providers such as IDE backend packages or the linter.
+- **[intentions.list](docs/intentions.list.md)** (`^1.0.0`): consumed to gather code actions for the cursor position from providers such as IDE backend packages or the linter.
 
 ## Contributing
 
