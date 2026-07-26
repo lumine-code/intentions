@@ -42,12 +42,11 @@ describe("intentions package assets", () => {
     expect(pkg.dependencies).toBeUndefined();
   });
 
-  it("consumes the list and highlight services and provides none", () => {
+  it("consumes the list service and provides none", () => {
     const pkg = JSON.parse(read("package.json"));
     expect(pkg.consumedServices["intentions.list"].versions["^1.0.0"]).toBe("consumeListProviders");
-    expect(pkg.consumedServices["intentions.highlight"].versions["^1.0.0"]).toBe(
-      "consumeHighlightProviders",
-    );
+    // Dropped: nothing ever provided it and no UI rendered it.
+    expect(pkg.consumedServices["intentions.highlight"]).toBeUndefined();
     expect(pkg.providedServices).toBeUndefined();
   });
 

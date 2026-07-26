@@ -240,14 +240,8 @@ describe("intentions", () => {
     expect(overlayDecorations(editor).length).toBe(0);
   });
 
-  it("registers highlight providers without rendering any UI for them", async () => {
-    const getIntentions = jasmine.createSpy("getIntentions");
-    disposables.add(mainModule.consumeHighlightProviders({ grammarScopes: ["*"], getIntentions }));
-    expect(mainModule.listManager.highlightRegistry.providers.length).toBe(1);
-
-    atom.commands.dispatch(editorView, "intentions:show");
-    await microtasks();
-    // The highlight provider is kept but never asked by the list command.
-    expect(getIntentions).not.toHaveBeenCalled();
+  it("registers no highlight provider surface", () => {
+    expect(mainModule.consumeHighlightProviders).toBeUndefined();
+    expect(mainModule.listManager.highlightRegistry).toBeUndefined();
   });
 });

@@ -30,11 +30,6 @@
       "versions": {
         "^1.0.0": "consumeListProviders"
       }
-    },
-    "intentions.highlight": {
-      "versions": {
-        "^1.0.0": "consumeHighlightProviders"
-      }
     }
   },
   "devDependencies": {

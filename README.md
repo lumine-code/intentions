@@ -12,7 +12,6 @@ Intentions come from provider packages — language-server backends, the linter,
 - **Mouse support**: hovering selects and clicking runs an intention without moving focus out of the editor.
 - **Octicon icons**: an intention with an `icon` renders its octicon in front of the title.
 - **Dismissal**: the list closes on cancel, on confirming an action, and when the editor is scrolled, edited, or loses focus; when no provider has an intention, a subtle notification says so.
-- **Highlight service**: consumes `intentions.highlight` providers for forward compatibility; the highlight UI is not rendered yet.
 
 ## Installation
 
@@ -40,7 +39,6 @@ The list appearance can be tweaked from your `styles.less`:
 ## Services
 
 - **intentions.list** (`^1.0.0`): consumed to gather code actions for the cursor position from providers such as IDE backend packages or the linter.
-- **intentions.highlight** (`^1.0.0`): consumed to register range-highlight providers; kept for forward compatibility, without a rendered UI yet.
 
 ## Contributing
 
