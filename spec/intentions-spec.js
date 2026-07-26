@@ -64,7 +64,7 @@ describe("intentions", () => {
       },
       getIntentions,
     };
-    disposables.add(mainModule.consumeListProviders(provider));
+    disposables.add(mainModule.consumeIntentionsList(provider));
     return provider;
   }
 

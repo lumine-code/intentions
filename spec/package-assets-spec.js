@@ -44,7 +44,9 @@ describe("intentions package assets", () => {
 
   it("consumes the list service and provides none", () => {
     const pkg = JSON.parse(read("package.json"));
-    expect(pkg.consumedServices["intentions.list"].versions["^1.0.0"]).toBe("consumeListProviders");
+    expect(pkg.consumedServices["intentions.list"].versions["^1.0.0"]).toBe(
+      "consumeIntentionsList",
+    );
     // Dropped: nothing ever provided it and no UI rendered it.
     expect(pkg.consumedServices["intentions.highlight"]).toBeUndefined();
     expect(pkg.providedServices).toBeUndefined();

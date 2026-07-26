@@ -28,7 +28,7 @@
   "consumedServices": {
     "intentions.list": {
       "versions": {
-        "^1.0.0": "consumeListProviders"
+        "^1.0.0": "consumeIntentionsList"
       }
     }
   },
