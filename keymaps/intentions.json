@@ -1,0 +1,9 @@
+{
+  "atom-text-editor:not([mini])": {
+    "alt-enter": "intentions:show"
+  },
+  "atom-text-editor.intentions-active": {
+    "enter": "core:confirm",
+    "escape": "core:cancel"
+  }
+}

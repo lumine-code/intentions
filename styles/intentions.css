@@ -1,0 +1,50 @@
+/* The intentions list is a `.intentions-list.select-list.popover-list` div
+   holding an `ol.list-group`, mounted as an overlay decoration at the cursor. */
+
+atom-overlay.intentions-overlay {
+  z-index: 12; /* higher than docks, same band as autocomplete */
+}
+
+.intentions-list {
+  min-width: 160px;
+  max-width: 480px;
+  overflow: hidden;
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background-color: var(--overlay-background-color);
+  border: 1px solid var(--overlay-border-color);
+  border-radius: var(--component-border-radius);
+}
+
+.intentions-list ol.list-group {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 315px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.intentions-list ol.list-group li {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.25em 0.75em;
+  line-height: 2em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.intentions-list ol.list-group li .intentions-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.intentions-list ol.list-group li .icon::before {
+  margin-right: 0;
+}
+
+.intentions-list ol.list-group li.selected {
+  color: var(--text-color-selected);
+  background-color: var(--background-color-selected);
+}

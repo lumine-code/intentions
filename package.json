@@ -1,0 +1,48 @@
+{
+  "name": "intentions",
+  "author": "lumine-code",
+  "description": "Show code actions and quick fixes at the cursor.",
+  "repository": "https://github.com/lumine-code/intentions",
+  "bugs": {
+    "url": "https://github.com/lumine-code/intentions/issues"
+  },
+  "keywords": [
+    "code-actions",
+    "quick-fix",
+    "autofix",
+    "refactoring",
+    "lsp"
+  ],
+  "version": "1.0.0",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.100.0 <2.0.0"
+  },
+  "main": "./lib/main",
+  "scripts": {
+    "test": "cd ../lumine && npm run test:only -- ../intentions/spec",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "consumedServices": {
+    "intentions.list": {
+      "versions": {
+        "^1.0.0": "consumeListProviders"
+      }
+    },
+    "intentions.highlight": {
+      "versions": {
+        "^1.0.0": "consumeHighlightProviders"
+      }
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-n": "^18.2.2",
+    "globals": "^17.7.0",
+    "prettier": "^3.9.6"
+  }
+}
