@@ -9,17 +9,11 @@ atom-overlay.intentions-overlay {
   min-width: 160px;
   max-width: 480px;
   overflow: hidden;
-  font-family: var(--font-family);
-  color: var(--text-color);
-  background-color: var(--overlay-background-color);
   border: 1px solid var(--overlay-border-color);
-  border-radius: var(--component-border-radius);
 }
 
 .intentions-list ol.list-group {
   margin: 0;
-  padding: 0;
-  list-style: none;
   max-height: 315px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -42,9 +36,4 @@ atom-overlay.intentions-overlay {
 
 .intentions-list ol.list-group li .icon::before {
   margin-right: 0;
-}
-
-.intentions-list ol.list-group li.selected {
-  color: var(--text-color-selected);
-  background-color: var(--background-color-selected);
 }
