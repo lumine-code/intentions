@@ -25,9 +25,9 @@ Commands available in `atom-text-editor:not([mini])`:
 
 ## Customization
 
-The list appearance can be tweaked from your `styles.less`:
+The list appearance can be tweaked from your `styles.css`:
 
-```less
+```css
 .intentions-list {
   max-width: 640px;
   ol.list-group li.selected {
