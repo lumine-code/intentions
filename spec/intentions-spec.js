@@ -1,5 +1,5 @@
 const path = require("path");
-const { CompositeDisposable } = require("atom");
+const { CompositeDisposable } = require("lumine");
 
 const packageRoot = path.join(__dirname, "..");
 
@@ -37,24 +37,24 @@ describe("intentions", () => {
   let disposables;
 
   beforeEach(async () => {
-    jasmine.attachToDOM(atom.views.getView(atom.workspace));
+    jasmine.attachToDOM(lumine.views.getView(lumine.workspace));
     disposables = new CompositeDisposable();
 
-    const pack = await atom.packages.activatePackage(packageRoot);
+    const pack = await lumine.packages.activatePackage(packageRoot);
     mainModule = pack.mainModule;
 
-    editor = await atom.workspace.open();
+    editor = await lumine.workspace.open();
     editor.setText("first line\nsecond line\n");
     editor.setCursorBufferPosition([0, 3]);
-    editorView = atom.views.getView(editor);
+    editorView = lumine.views.getView(editor);
     editorView.focus();
     await microtasks();
   });
 
   afterEach(async () => {
     disposables.dispose();
-    await atom.packages.deactivatePackage("intentions");
-    for (const open of atom.workspace.getTextEditors()) open.destroy();
+    await lumine.packages.deactivatePackage("intentions");
+    for (const open of lumine.workspace.getTextEditors()) open.destroy();
   });
 
   function addProvider({ grammarScopes = () => ["*"], getIntentions }) {
@@ -79,7 +79,7 @@ describe("intentions", () => {
       getIntentions: async () => [{ title: "Middle fix", priority: 50, selected() {} }],
     });
 
-    atom.commands.dispatch(editorView, "intentions:show");
+    lumine.commands.dispatch(editorView, "intentions:show");
     await microtasks();
 
     expect(overlayDecorations(editor).length).toBe(1);
@@ -101,7 +101,7 @@ describe("intentions", () => {
     });
     addProvider({ grammarScopes: () => ["source.some-other"], getIntentions: foreign });
 
-    atom.commands.dispatch(editorView, "intentions:show");
+    lumine.commands.dispatch(editorView, "intentions:show");
     await microtasks();
 
     expect(matching).toHaveBeenCalled();
@@ -121,18 +121,18 @@ describe("intentions", () => {
       ],
     });
 
-    atom.commands.dispatch(editorView, "intentions:show");
+    lumine.commands.dispatch(editorView, "intentions:show");
     await microtasks();
     expect(selectedTitle(editor)).toBe("First");
 
-    atom.commands.dispatch(editorView, "core:move-down");
+    lumine.commands.dispatch(editorView, "core:move-down");
     expect(selectedTitle(editor)).toBe("Second");
-    atom.commands.dispatch(editorView, "core:move-down");
+    lumine.commands.dispatch(editorView, "core:move-down");
     expect(selectedTitle(editor)).toBe("First");
-    atom.commands.dispatch(editorView, "core:move-up");
+    lumine.commands.dispatch(editorView, "core:move-up");
     expect(selectedTitle(editor)).toBe("Second");
 
-    atom.commands.dispatch(editorView, "core:confirm");
+    lumine.commands.dispatch(editorView, "core:confirm");
     await microtasks();
     expect(second).toHaveBeenCalled();
     expect(first).not.toHaveBeenCalled();
@@ -146,17 +146,17 @@ describe("intentions", () => {
       getIntentions: async () => [{ title: "Fix", priority: 1, selected }],
     });
 
-    atom.commands.dispatch(editorView, "intentions:show");
+    lumine.commands.dispatch(editorView, "intentions:show");
     await microtasks();
     expect(overlayDecorations(editor).length).toBe(1);
 
     // The keymap routes escape to core:cancel while the list is open.
-    const bindings = atom.keymaps
+    const bindings = lumine.keymaps
       .findKeyBindings({ keystrokes: "escape", target: editorView })
       .map((binding) => binding.command);
     expect(bindings).toContain("core:cancel");
 
-    atom.commands.dispatch(editorView, "core:cancel");
+    lumine.commands.dispatch(editorView, "core:cancel");
     expect(overlayDecorations(editor).length).toBe(0);
     expect(selected).not.toHaveBeenCalled();
   });
@@ -170,7 +170,7 @@ describe("intentions", () => {
       ],
     });
 
-    atom.commands.dispatch(editorView, "intentions:show");
+    lumine.commands.dispatch(editorView, "intentions:show");
     await microtasks();
 
     const rows = overlayItem(editor).querySelectorAll("li");
@@ -187,12 +187,12 @@ describe("intentions", () => {
   it("shows no overlay and a notification when no provider has intentions", async () => {
     addProvider({ getIntentions: async () => [] });
 
-    atom.commands.dispatch(editorView, "intentions:show");
+    lumine.commands.dispatch(editorView, "intentions:show");
     await microtasks();
 
     expect(overlayDecorations(editor).length).toBe(0);
     expect(editorView.classList.contains("intentions-active")).toBe(false);
-    const messages = atom.notifications.getNotifications().map((n) => n.getMessage());
+    const messages = lumine.notifications.getNotifications().map((n) => n.getMessage());
     expect(messages).toContain("No intentions available at the cursor position.");
   });
 
@@ -203,7 +203,7 @@ describe("intentions", () => {
       getIntentions: async () => [{ title: "Healthy", priority: 1, selected() {} }],
     });
 
-    atom.commands.dispatch(editorView, "intentions:show");
+    lumine.commands.dispatch(editorView, "intentions:show");
     await microtasks();
 
     expect(listTitles(editor)).toEqual(["Healthy"]);
@@ -216,11 +216,11 @@ describe("intentions", () => {
       getIntentions: async () => [{ title: `Round ${++round}`, priority: 1, selected() {} }],
     });
 
-    atom.commands.dispatch(editorView, "intentions:show");
+    lumine.commands.dispatch(editorView, "intentions:show");
     await microtasks();
     expect(listTitles(editor)).toEqual(["Round 1"]);
 
-    atom.commands.dispatch(editorView, "intentions:show");
+    lumine.commands.dispatch(editorView, "intentions:show");
     await microtasks();
     expect(overlayDecorations(editor).length).toBe(1);
     expect(listTitles(editor)).toEqual(["Round 2"]);
@@ -231,7 +231,7 @@ describe("intentions", () => {
       getIntentions: async () => [{ title: "Fix", priority: 1, selected() {} }],
     });
 
-    atom.commands.dispatch(editorView, "intentions:show");
+    lumine.commands.dispatch(editorView, "intentions:show");
     await microtasks();
     expect(overlayDecorations(editor).length).toBe(1);
 

@@ -1,7 +1,7 @@
 /* The intentions list is a `.intentions-list.select-list.popover-list` div
    holding an `ol.list-group`, mounted as an overlay decoration at the cursor. */
 
-atom-overlay.intentions-overlay {
+lumine-overlay.intentions-overlay {
   z-index: 12; /* higher than docks, same band as autocomplete */
 }
 

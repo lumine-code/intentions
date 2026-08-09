@@ -16,9 +16,9 @@ describe("intentions package assets", () => {
 
   it("binds the show command and routes enter/escape while the list is open", () => {
     const keymap = JSON.parse(read("keymaps/intentions.json"));
-    expect(keymap["atom-text-editor:not([mini])"]["alt-enter"]).toBe("intentions:show");
-    expect(keymap["atom-text-editor.intentions-active"]["enter"]).toBe("core:confirm");
-    expect(keymap["atom-text-editor.intentions-active"]["escape"]).toBe("core:cancel");
+    expect(keymap["lumine-text-editor:not([mini])"]["alt-enter"]).toBe("intentions:show");
+    expect(keymap["lumine-text-editor.intentions-active"]["enter"]).toBe("core:confirm");
+    expect(keymap["lumine-text-editor.intentions-active"]["escape"]).toBe("core:cancel");
   });
 
   it("ships a CSS stylesheet built on custom properties, not Less", () => {
