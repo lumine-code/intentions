@@ -15,7 +15,7 @@ Intentions come from provider packages — language-server backends, the linter,
 
 ## Installation
 
-To install `intentions` search for _intentions_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/intentions`.
+To install `intentions` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/intentions`.
 
 ## Commands
 
@@ -38,7 +38,7 @@ The list appearance can be tweaked from your `styles.css`:
 
 ## Services
 
-- **[intentions.list](docs/intentions.list.md)** (`^1.0.0`): consumed to gather code actions for the cursor position from providers such as IDE backend packages or the linter.
+- [`intentions.list`](docs/intentions.list.md): consumed to gather code actions for the cursor position from providers such as IDE backend packages or the linter.
 
 ## Contributing
 
