@@ -10,21 +10,21 @@ const exists = (rel) => fs.existsSync(path.join(root, rel));
 // code was ported), so no legacy formats or references may appear.
 describe("intentions package assets", () => {
   it("ships the keymap as JSON, not CSON", () => {
-    expect(exists("keymaps/intentions.json")).toBe(true);
+    expect(exists("keymaps/main.json")).toBe(true);
     expect(exists("keymaps/intentions.cson")).toBe(false);
   });
 
   it("binds the show command and routes enter/escape while the list is open", () => {
-    const keymap = JSON.parse(read("keymaps/intentions.json"));
+    const keymap = JSON.parse(read("keymaps/main.json"));
     expect(keymap["lumine-text-editor:not([mini])"]["alt-enter"]).toBe("intentions:show");
     expect(keymap["lumine-text-editor.intentions-active"]["enter"]).toBe("core:confirm");
     expect(keymap["lumine-text-editor.intentions-active"]["escape"]).toBe("core:cancel");
   });
 
   it("ships a CSS stylesheet built on custom properties, not Less", () => {
-    expect(exists("styles/intentions.css")).toBe(true);
+    expect(exists("styles/main.css")).toBe(true);
     expect(exists("styles/intentions.less")).toBe(false);
-    const css = read("styles/intentions.css");
+    const css = read("styles/main.css");
     expect(css).toContain(".intentions-list");
     expect(css).toContain("var(--");
     expect(css).not.toContain("@import");
