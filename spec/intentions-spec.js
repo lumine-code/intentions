@@ -1,5 +1,5 @@
 const path = require("path");
-const { CompositeDisposable } = require("lumine");
+const { CompositeDisposable, Icon } = require("lumine");
 
 const packageRoot = path.join(__dirname, "..");
 
@@ -88,6 +88,22 @@ describe("intentions", () => {
     // The icon renders as an octicon span in front of the title.
     const icon = overlayItem(editor).querySelector("li.selected .icon");
     expect(icon.classList.contains("icon-zap")).toBe(true);
+    disposables.add(
+      lumine.icons.addProvider(
+        {
+          id: "intentions-spec",
+          handles: ["name"],
+          usesContext: true,
+          iconFor(target) {
+            return target.context === "intentions" && target.name === "zap"
+              ? Icon.classes(["icon-flame"])
+              : null;
+          },
+        },
+        { priority: 100 },
+      ),
+    );
+    expect(icon.classList.contains("icon-flame")).toBe(true);
     // The keymap scoping class is present while the list is open.
     expect(editorView.classList.contains("intentions-active")).toBe(true);
   });
