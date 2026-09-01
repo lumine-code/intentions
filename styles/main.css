@@ -26,7 +26,7 @@ lumine-overlay.intentions-overlay {
   padding: 0.25em 0.75em;
   line-height: 2em;
   white-space: nowrap;
-  cursor: pointer;
+  cursor: default;
 }
 
 .intentions-list ol.list-group li .intentions-title {
