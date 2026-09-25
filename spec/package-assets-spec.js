@@ -42,14 +42,16 @@ describe("intentions package assets", () => {
     expect(pkg.dependencies).toBeUndefined();
   });
 
-  it("consumes the list service and provides none", () => {
+  it("consumes the list service and provides background tips", () => {
     const pkg = JSON.parse(read("package.json"));
     expect(pkg.consumedServices["intentions.list"].versions["^1.0.0"]).toBe(
       "consumeIntentionsList",
     );
     // Dropped: nothing ever provided it and no UI rendered it.
     expect(pkg.consumedServices["intentions.highlight"]).toBeUndefined();
-    expect(pkg.providedServices).toBeUndefined();
+    expect(pkg.providedServices["background-tips.provider"].versions["1.0.0"]).toBe(
+      "provideBackgroundTips",
+    );
   });
 
   it("keeps the README description in sync with package.json", () => {
