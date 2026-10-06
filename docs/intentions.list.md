@@ -9,7 +9,7 @@ Supplies the code actions and quick fixes offered at the cursor.
 | Consumed by | `consumeIntentionsList(provider)` returning a `Disposable` |
 | Owner       | [`intentions`](https://github.com/lumine-code/intentions)  |
 
-Two packages provide it today: `ide-client` turns LSP code actions into intentions, and `linter` turns each message's `solutions` into quick fixes. Both appear in the same list.
+Two packages provide it today: `ide` turns LSP code actions into intentions, and `linter` turns each message's `solutions` into quick fixes. Both appear in the same list.
 
 ## Registration
 
