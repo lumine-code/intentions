@@ -242,6 +242,69 @@ describe("intentions", () => {
     expect(listTitles(editor)).toEqual(["Round 2"]);
   });
 
+  it("ignores a provider that answers after the list is cancelled", async () => {
+    let resolve;
+    addProvider({ getIntentions: () => new Promise((done) => (resolve = done)) });
+    const manager = mainModule.listManager;
+    const show = manager.show(editor);
+
+    manager.hide();
+    resolve([{ title: "Late fix", selected() {} }]);
+    await show;
+
+    expect(overlayDecorations(editor).length).toBe(0);
+    expect(editorView.classList.contains("intentions-active")).toBe(false);
+  });
+
+  it("ignores a provider that answers after package deactivation", async () => {
+    let resolve;
+    addProvider({ getIntentions: () => new Promise((done) => (resolve = done)) });
+    const manager = mainModule.listManager;
+    const show = manager.show(editor);
+
+    await lumine.packages.deactivatePackage("intentions");
+    resolve([{ title: "Late fix", selected() {} }]);
+    await show;
+
+    expect(manager.isActive()).toBe(false);
+    expect(overlayDecorations(editor).length).toBe(0);
+    expect(editorView.classList.contains("intentions-active")).toBe(false);
+  });
+
+  it("ignores a provider that answers after its editor is destroyed", async () => {
+    let resolve;
+    addProvider({ getIntentions: () => new Promise((done) => (resolve = done)) });
+    const manager = mainModule.listManager;
+    const mount = spyOn(manager, "mount").and.callThrough();
+    const show = manager.show(editor);
+
+    editor.destroy();
+    resolve([{ title: "Late fix", selected() {} }]);
+    await show;
+
+    expect(mount).not.toHaveBeenCalled();
+    expect(manager.isActive()).toBe(false);
+  });
+
+  it("keeps the newest request when an earlier provider answer arrives last", async () => {
+    let resolve;
+    let round = 0;
+    addProvider({
+      getIntentions: () =>
+        ++round === 1
+          ? new Promise((done) => (resolve = done))
+          : [{ title: "Current fix", selected() {} }],
+    });
+    const manager = mainModule.listManager;
+    const first = manager.show(editor);
+    await manager.show(editor);
+    resolve([{ title: "Old fix", selected() {} }]);
+    await first;
+
+    expect(listTitles(editor)).toEqual(["Current fix"]);
+    expect(overlayDecorations(editor).length).toBe(1);
+  });
+
   it("closes when the buffer is edited", async () => {
     addProvider({
       getIntentions: async () => [{ title: "Fix", priority: 1, selected() {} }],
