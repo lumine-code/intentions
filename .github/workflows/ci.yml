@@ -40,15 +40,30 @@ jobs:
         run: npm run lint
       - name: Check formatting
         run: npm run format:check
+      - name: Audit dependencies
+        run: npm audit --audit-level=moderate
+      - name: Check package contents
+        run: npm pack --dry-run
 
   integration:
     # Run the Jasmine spec suite inside a real Lumine build; the specs exercise
     # the editor runtime (text editors, overlay decorations, and command dispatch).
-    name: Lumine integration specs
-    runs-on: ubuntu-latest
+    name: Lumine integration specs on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    defaults:
+      run:
+        shell: bash
     env:
       LUMINE_JASMINE_REPORTER: list
+      LUMINE_DISABLE_SHELLING_OUT_FOR_ENVIRONMENT: "true"
+      TEMP: ${{ github.workspace }}/intentions-spec-tmp
+      TMP: ${{ github.workspace }}/intentions-spec-tmp
+      TMPDIR: ${{ github.workspace }}/intentions-spec-tmp
     steps:
       - uses: actions/checkout@v7
         with:
@@ -63,6 +78,7 @@ jobs:
           cache: npm
           cache-dependency-path: lumine/package-lock.json
       - name: Install Linux build and headless-display dependencies
+        if: runner.os == 'Linux'
         run: |
           # A third-party repository on the runner image answering 403 must not
           # fail the job: the lists this actually needs still fetched, and the
@@ -73,6 +89,8 @@ jobs:
       # no ssh key, so rewrite them to anonymous HTTPS (the forks are public).
       - name: Use HTTPS for GitHub git dependencies
         run: git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
+      - name: Create the private temporary directory
+        run: mkdir -p "$TEMP"
       - name: Install package dependencies
         working-directory: intentions
         run: npm ci --ignore-scripts
@@ -87,7 +105,14 @@ jobs:
       - name: Rebuild native modules for Electron
         working-directory: lumine
         run: npm run build
+      - name: Provision the private spec home
+        run: node lumine/script/install-spec-packages.js --package intentions --home "$RUNNER_TEMP/intentions-spec-home" --github-env "$GITHUB_ENV"
       - name: Run the Jasmine spec suite
         working-directory: lumine
         timeout-minutes: 20
-        run: xvfb-run --auto-servernum npm start -- --test ../intentions/spec
+        run: |
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            xvfb-run --auto-servernum npm start -- --test ../intentions/spec
+          else
+            npm start -- --test ../intentions/spec
+          fi
