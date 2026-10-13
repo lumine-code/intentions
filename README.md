@@ -13,6 +13,8 @@ Intentions come from provider packages — language-server backends, the linter,
 - **Octicon icons**: an intention with an `icon` renders its octicon in front of the title.
 - **Dismissal**: the list closes on cancel, on confirming an action, and when the editor is scrolled, edited, or loses focus; when no provider has an intention, a subtle notification says so.
 
+![Choose a spelling correction from the available code actions.](.github/demo.png)
+
 ## Installation
 
 To install `intentions` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/intentions`.

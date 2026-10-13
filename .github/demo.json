@@ -1,0 +1,17 @@
+{
+  "title": "intentions",
+  "description": "Choose a spelling correction from the available code actions.",
+  "recordedOn": "2026-10-13",
+  "sourceRevision": "eabdeb73648378f2a400f9551dd67ca4d36283a6",
+  "mode": "normal",
+  "fontSettings": "default",
+  "themeSourceRevision": "6564a9e21899b5541e9c8f8006f9be6d6d72e6ad",
+  "images": [
+    {
+      "file": "demo.png",
+      "label": "Choose a spelling correction from the available code actions.",
+      "width": 1100,
+      "height": 500
+    }
+  ]
+}
