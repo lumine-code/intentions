@@ -1,0 +1,61 @@
+describe("intentions application menu document context", () => {
+  let main, first, second, extra, button, cell, notebook, lease, lookup;
+  beforeEach(async () => {
+    jasmine.useRealClock();
+    jasmine.attachToDOM(lumine.workspace.getElement());
+
+    main = (await lumine.packages.activatePackage("intentions")).mainModule;
+    first = await lumine.workspace.open();
+    first.setText("first symbol");
+    lookup = spyOn(main.listManager, "show").and.resolveTo();
+  });
+  afterEach(async () => {
+    lease?.dispose();
+    lease = null;
+    await lumine.packages.deactivatePackage("intentions");
+    button?.remove();
+    button = null;
+    if (notebook) {
+      const pane = lumine.workspace.paneForItem(notebook);
+      if (pane) await pane.destroyItem(notebook, true);
+    }
+    notebook = null;
+    cell?.destroy();
+    cell = null;
+    await lumine.workspace.discardEditorWindows();
+    first?.destroy();
+  });
+  it("uses the captured local editor when an unrelated surface belongs to another window", async () => {
+    extra = await lumine.workspace.openEditorWindow({ show: false });
+    second = lumine.workspace.buildTextEditor();
+    second.setText("second symbol");
+    extra.getEditorContainer().getActivePane().activateItem(second, { activatePane: true });
+    button = extra.getDocument().createElement("button");
+    extra.getElement().appendChild(button);
+    lumine.workspace.paneForItem(first).activate();
+    button.focus();
+    expect(lumine.workspace.resolveCommandContext(button).embeddedEditor).toBe(second);
+    expect(lumine.workspace.getActiveTextEditor()).toBe(first);
+    await lumine.commands.dispatch(button, "intentions:show");
+    expect(lookup.calls.mostRecent().args[0]).toBe(second);
+  });
+  it("uses the embedded document editor when a notebook owns the active pane item", async () => {
+    cell = lumine.workspace.buildTextEditor();
+    cell.setText("notebook symbol");
+    const element = document.createElement("div");
+    notebook = {
+      getTitle: () => "Notebook",
+      getElement: () => element,
+      getActiveEmbeddedTextEditor: () => cell,
+      destroy: () => element.remove(),
+    };
+    lumine.workspace.getActivePane().activateItem(notebook, { activatePane: true });
+    button = document.createElement("button");
+    element.appendChild(button);
+    button.focus();
+    expect(lumine.workspace.getActiveTextEditor()).toBeUndefined();
+    expect(lumine.workspace.resolveCommandContext(button).embeddedEditor).toBe(cell);
+    await lumine.commands.dispatch(button, "intentions:show");
+    expect(lookup.calls.mostRecent().args[0]).toBe(cell);
+  });
+});
