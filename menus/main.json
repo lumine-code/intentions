@@ -1,0 +1,27 @@
+{
+  "menu": [
+    {
+      "label": "Edit",
+      "submenu": [
+        {
+          "label": "Show Code Actions…",
+          "command": "intentions:show"
+        }
+      ]
+    },
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "Intentions",
+          "submenu": [
+            {
+              "label": "Show Code Actions…",
+              "command": "intentions:show"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

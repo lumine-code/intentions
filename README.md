@@ -19,7 +19,7 @@ To install `intentions` search for it in the Install pane of the Lumine settings
 
 ## Commands
 
-Commands available in `lumine-text-editor:not([mini])`:
+Commands available in `lumine-workspace`:
 
 - `intentions:show`: gather intentions from all providers and show the list at the cursor; while a list is open it is closed first, so lists never stack.
 

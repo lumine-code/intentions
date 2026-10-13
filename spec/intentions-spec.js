@@ -68,6 +68,23 @@ describe("intentions", () => {
     return provider;
   }
 
+  it("shows code actions for the active editor from a focused unrelated surface", async () => {
+    const actions = jasmine
+      .createSpy("menu code actions")
+      .and.resolveTo([{ title: "Menu fix", selected() {} }]);
+    addProvider({ getIntentions: actions });
+    const button = document.createElement("button");
+    lumine.workspace.getElement().appendChild(button);
+    try {
+      button.focus();
+      await lumine.commands.dispatch(button, "intentions:show");
+      expect(actions.calls.mostRecent().args[0].textEditor).toBe(editor);
+      expect(listTitles(editor)).toEqual(["Menu fix"]);
+    } finally {
+      button.remove();
+    }
+  });
+
   it("merges the intentions of all providers, sorted by priority descending", async () => {
     addProvider({
       getIntentions: async () => [
