@@ -5,7 +5,9 @@
       "submenu": [
         {
           "label": "Show Code Actions…",
-          "command": "intentions:show"
+          "command": "intentions:show",
+          "group": "refactor",
+          "order": 20
         }
       ]
     },
