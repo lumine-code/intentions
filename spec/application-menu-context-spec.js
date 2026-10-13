@@ -58,4 +58,18 @@ describe("intentions application menu document context", () => {
     await lumine.commands.dispatch(button, "intentions:show");
     expect(lookup.calls.mostRecent().args[0]).toBe(cell);
   });
+  it("does nothing in an empty auxiliary window while the main window still has an editor", async () => {
+    extra = await lumine.workspace.openEditorWindow({ show: false });
+    button = extra.getDocument().createElement("button");
+    extra.getElement().appendChild(button);
+    lumine.workspace.paneForItem(first).activate();
+    button.focus();
+    const context = lumine.workspace.resolveCommandContext(button);
+    expect(context.window).toBe(extra);
+    expect(context.embeddedEditor).toBeUndefined();
+    expect(context.editor).toBeUndefined();
+    expect(lumine.workspace.getActiveTextEditor()).toBe(first);
+    await lumine.commands.dispatch(button, "intentions:show");
+    expect(lookup).not.toHaveBeenCalled();
+  });
 });
