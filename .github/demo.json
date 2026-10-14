@@ -1,17 +1,86 @@
 {
   "title": "intentions",
   "description": "Choose a spelling correction from the available code actions.",
-  "recordedOn": "2026-10-13",
-  "sourceRevision": "eabdeb73648378f2a400f9551dd67ca4d36283a6",
+  "recordedOn": "2026-10-14",
+  "sourceRevision": "6c25da24a61ca0de4c0c41cc3d1944d44e27646d",
+  "themeSourceRevision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
   "mode": "normal",
   "fontSettings": "default",
-  "themeSourceRevision": "6564a9e21899b5541e9c8f8006f9be6d6d72e6ad",
+  "scenario": "demo.js",
+  "recipeHash": "70b576e8f61cbec32ca95f16923b18596206317b849709bf3ded2ed1f640685f",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "electron": "44.7.0",
+    "chrome": "152.0.7977.130",
+    "devicePixelRatio": 1,
+    "locale": "en-GB",
+    "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
+    "fontSize": 14,
+    "themes": ["one-day-syntax", "one-day-ui"]
+  },
+  "viewport": { "width": 1100, "height": 500 },
+  "cornerRadius": 10,
+  "sources": {
+    "editor": {
+      "revision": "ca7198ebc05410bb29a14259434e77c94a714b24",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "package": {
+      "revision": "6c25da24a61ca0de4c0c41cc3d1944d44e27646d",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "intentions": {
+      "revision": "6c25da24a61ca0de4c0c41cc3d1944d44e27646d",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "autocomplete": {
+      "revision": "6c09c061f8693eafa65d9e6077c8cb5c09e12ac2",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "language-gfm": {
+      "revision": "be723ccf806fdd4a2a06638f6e881c09a53b4409",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "linter": {
+      "revision": "9fc80e0296b3af2507e5ff04c7e043a813540245",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "linter-panel": {
+      "revision": "e380022d4df6542bcb57b4337b614c61c86f1d68",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "one-theme": {
+      "revision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "spell-check": {
+      "revision": "a84d1e97e1323cbb0632adcd9a70029c4ab77fe7",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "fixtures": [
+    {
+      "file": "more/README.md",
+      "sha256": "1437641276c681dde18b53de6b3f642d1f6fc1556f882aa88f558e7a7d7f1f2e"
+    }
+  ],
   "images": [
     {
       "file": "demo.png",
       "label": "Choose a spelling correction from the available code actions.",
       "width": 1100,
-      "height": 500
+      "height": 500,
+      "sha256": "04f325580148d7de1801a3226dde46f45360267a693eabb9abae018031c011c6"
     }
   ]
 }
