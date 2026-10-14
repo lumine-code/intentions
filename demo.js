@@ -21,19 +21,25 @@ module.exports = {
         const { lumine, state } = context;
         {
           state.editor.selectAll();
-          lumine.commands.dispatch(
+          await lumine.commands.dispatch(
             lumine.views.getView(state.editor),
             "spell-check:check-selected",
           );
           state.editor.setCursorBufferPosition([2, 9]);
           await new Promise((resolve) => setTimeout(resolve, 1800));
         }
-        {
-          lumine.commands.dispatch(lumine.views.getView(state.editor), "intentions:show");
-        }
       },
-      ready() {
-        return Boolean(document.body.innerText.includes("algorithm"));
+      async afterPointerMove({ lumine, state }) {
+        state.editor.getElement().focus();
+        await lumine.commands.dispatch(state.editor.getElement(), "intentions:show");
+      },
+      ready({ lumine }) {
+        const manager = lumine.packages.getActivePackage("intentions").mainModule.listManager;
+        return (
+          manager.isActive() &&
+          manager.listElement?.getBoundingClientRect().height > 0 &&
+          manager.listElement.innerText.includes("algorithm")
+        );
       },
     },
   ],
