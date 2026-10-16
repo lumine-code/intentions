@@ -8,6 +8,7 @@ describe("intentions application menu document context", () => {
     first = await lumine.workspace.open();
     first.setText("first symbol");
     lookup = spyOn(main.listManager, "show").and.resolveTo();
+    lease = main.consumeIntentionsList({ grammarScopes: ["*"], getIntentions: async () => [] });
   });
   afterEach(async () => {
     lease?.dispose();
