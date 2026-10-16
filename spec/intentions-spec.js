@@ -68,7 +68,7 @@ describe("intentions", () => {
     return provider;
   }
 
-  it("shows code actions for the active editor from a focused unrelated surface", async () => {
+  it("does not offer editor code actions from an unrelated focused surface", async () => {
     const actions = jasmine
       .createSpy("menu code actions")
       .and.resolveTo([{ title: "Menu fix", selected() {} }]);
@@ -78,8 +78,8 @@ describe("intentions", () => {
     try {
       button.focus();
       await lumine.commands.dispatch(button, "intentions:show");
-      expect(actions.calls.mostRecent().args[0].textEditor).toBe(editor);
-      expect(listTitles(editor)).toEqual(["Menu fix"]);
+      expect(actions).not.toHaveBeenCalled();
+      expect(lumine.commands.canDispatch(button, "intentions:show")).toBe(false);
     } finally {
       button.remove();
     }
