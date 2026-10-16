@@ -25,7 +25,7 @@ describe("intentions application menu document context", () => {
     await lumine.workspace.discardEditorWindows();
     first?.destroy();
   });
-  it("uses the captured local editor when an unrelated surface belongs to another window", async () => {
+  it("requires editor focus and uses the invoking window's editor", async () => {
     extra = await lumine.workspace.openEditorWindow({ show: false });
     second = lumine.workspace.buildTextEditor();
     second.setText("second symbol");
@@ -37,6 +37,9 @@ describe("intentions application menu document context", () => {
     expect(lumine.workspace.resolveCommandContext(button).embeddedEditor).toBe(second);
     expect(lumine.workspace.getActiveTextEditor()).toBe(first);
     await lumine.commands.dispatch(button, "intentions:show");
+    expect(lookup).not.toHaveBeenCalled();
+    expect(lumine.commands.canDispatch(button, "intentions:show")).toBe(false);
+    await lumine.commands.dispatch(second.element, "intentions:show");
     expect(lookup.calls.mostRecent().args[0]).toBe(second);
   });
   it("uses the embedded document editor when a notebook owns the active pane item", async () => {
@@ -56,6 +59,9 @@ describe("intentions application menu document context", () => {
     expect(lumine.workspace.getActiveTextEditor()).toBeUndefined();
     expect(lumine.workspace.resolveCommandContext(button).embeddedEditor).toBe(cell);
     await lumine.commands.dispatch(button, "intentions:show");
+    expect(lookup).not.toHaveBeenCalled();
+    element.appendChild(cell.element);
+    await lumine.commands.dispatch(cell.element, "intentions:show");
     expect(lookup.calls.mostRecent().args[0]).toBe(cell);
   });
   it("does nothing in an empty auxiliary window while the main window still has an editor", async () => {
