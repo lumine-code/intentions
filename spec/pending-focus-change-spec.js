@@ -5,6 +5,11 @@ beforeEach(() => {
 });
 
 describe("Intentions awaiting a provider when focus leaves the editor", () => {
+  // Analysis fixtures use a real grammar; None deliberately disables this package.
+  beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
+  });
+
   let editor, other, main, lease, finish, request, asked;
   beforeEach(async () => {
     jasmine.useRealClock();

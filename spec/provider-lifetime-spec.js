@@ -1,4 +1,9 @@
 describe("Intentions service provider ownership", () => {
+  // Analysis fixtures use a real grammar; None deliberately disables this package.
+  beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
+  });
+
   let main, editor, leases;
   beforeEach(async () => {
     jasmine.attachToDOM(lumine.views.getView(lumine.workspace));

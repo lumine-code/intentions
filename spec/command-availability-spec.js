@@ -1,4 +1,9 @@
 describe("intentions provider availability", () => {
+  // Analysis fixtures use a real grammar; None deliberately disables this package.
+  beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
+  });
+
   it("reads grammar metadata without asking providers for actions", async () => {
     const main = (await lumine.packages.activatePackage("intentions")).mainModule;
     const editor = await lumine.workspace.open();

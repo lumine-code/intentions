@@ -1,4 +1,9 @@
 describe("Intentions awaiting a provider while the buffer changes", () => {
+  // Analysis fixtures use a real grammar; None deliberately disables this package.
+  beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
+  });
+
   let editor, main, lease, finish, requested, request;
 
   beforeEach(async () => {
@@ -57,6 +62,17 @@ describe("Intentions awaiting a provider while the buffer changes", () => {
     await request;
     expect(overlays().length).toBe(0);
     expect(editor.getElement().classList.contains("intentions-active")).toBe(false);
+  });
+
+  it("discards pending actions when None is selected and stops querying providers", async () => {
+    show();
+    editor.setGrammar(lumine.grammars.nullGrammar);
+    finish([{ title: "Previous grammar", selected() {} }]);
+    await request;
+    expect(overlays().length).toBe(0);
+    requested = false;
+    await main.listManager.show(editor);
+    expect(requested).toBe(false);
   });
 
   it("shows and executes the action while the requested buffer stays unchanged", async () => {

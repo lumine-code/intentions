@@ -31,6 +31,11 @@ function selectedTitle(editor) {
 }
 
 describe("intentions", () => {
+  // Analysis fixtures use a real grammar; None deliberately disables this package.
+  beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
+  });
+
   let mainModule;
   let editor;
   let editorView;
